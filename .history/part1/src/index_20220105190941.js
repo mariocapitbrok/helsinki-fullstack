@@ -3,11 +3,7 @@
 
 // ReactDOM.render(<App />, document.getElementById('root'))
 
-const sum = (p1, p2) => {
-  console.log(p1)
-  console.log(p2)
-  return p1 + p2
-}
+const t = [1, 2, 3]
 
-const result = sum(1, 5)
-console.log(result)
+const m1 = t.map((value) => value * 2)
+console.log(m1) // [2, 4, 6] is printed

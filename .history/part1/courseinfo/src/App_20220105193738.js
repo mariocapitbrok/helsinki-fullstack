@@ -1,6 +1,7 @@
 import React from 'react'
 
 const Header = (props) => {
+  console.log(props)
   return <h1>{props.course}</h1>
 }
 
@@ -14,7 +15,7 @@ const Part = (props) => {
 }
 
 const Content = (props) => {
-  const [part1, part2, part3] = props.parts
+  const { part1, part2, part3 } = props.parts
   return (
     <>
       <Part part={part1.name} exercises={part1.exercises} />
@@ -23,17 +24,7 @@ const Content = (props) => {
     </>
   )
 }
-const Total = (props) => {
-  const sumPartsExercises = (parts) => {
-    let totalExercises = parts.reduce(
-      (subtotal, part) => subtotal + part.exercises,
-      0
-    )
-    return totalExercises
-  }
-
-  return <p>Number of exercises {sumPartsExercises(props.parts)}</p>
-}
+const Total = (props) => <p>Number of exercises {props.total}</p>
 
 const App = () => {
   const course = 'Half Stack application development'
@@ -56,7 +47,7 @@ const App = () => {
     <div>
       <Header course={course} />
       <Content parts={parts} />
-      <Total parts={parts} />
+      <Total total={part1.exercises + part2.exercises + part3.exercises} />
     </div>
   )
 }

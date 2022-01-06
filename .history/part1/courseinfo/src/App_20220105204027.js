@@ -24,15 +24,7 @@ const Content = (props) => {
   )
 }
 const Total = (props) => {
-  const sumPartsExercises = (parts) => {
-    let totalExercises = parts.reduce(
-      (subtotal, part) => subtotal + part.exercises,
-      0
-    )
-    return totalExercises
-  }
-
-  return <p>Number of exercises {sumPartsExercises(props.parts)}</p>
+  return <p>Number of exercises {props.total}</p>
 }
 
 const App = () => {
