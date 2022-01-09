@@ -8,6 +8,30 @@ const List = ({ title, value }) => (
   </li>
 )
 
+const Statistics = ({ good, neutral, bad, total, average, percentage }) => {
+  if (total === 0)
+    return (
+      <>
+        <h1>statistics</h1>
+        <h3>No feedback given</h3>
+      </>
+    )
+
+  return (
+    <>
+      <h1>statistics</h1>
+      <ul>
+        <List title="good" value={good} />
+        <List title="neutral" value={neutral} />
+        <List title="bad" value={bad} />
+        <li>all {total}</li>
+        <li>average {average}</li>
+        <li>positive {percentage} %</li>
+      </ul>
+    </>
+  )
+}
+
 const App = () => {
   const [good, setGood] = useState(0)
   const [neutral, setNeutral] = useState(0)
@@ -58,15 +82,14 @@ const App = () => {
       <Button onClick={handleGood} text="good" />
       <Button onClick={handleNeutral} text="neutral" />
       <Button onClick={handleBad} text="bad" />
-      <h1>statistics</h1>
-      <ul>
-        <List title="good" value={good} />
-        <List title="neutral" value={neutral} />
-        <List title="bad" value={bad} />
-        <li>all {total}</li>
-        <li>average {average}</li>
-        <li>positive {percentage} %</li>
-      </ul>
+      <Statistics
+        good={good}
+        neutral={neutral}
+        bad={bad}
+        total={total}
+        average={average}
+        percentage={percentage}
+      />
     </div>
   )
 }
