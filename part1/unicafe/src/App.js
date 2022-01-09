@@ -2,10 +2,11 @@ import React, { useState } from 'react'
 
 const Button = ({ onClick, text }) => <button onClick={onClick}>{text}</button>
 
-const List = ({ title, value }) => (
-  <li>
-    {title} {value}
-  </li>
+const StatisticLine = ({ title, value }) => (
+  <tr>
+    <td>{title}</td>
+    <td>{title === 'positive' ? value + ' %' : value}</td>
+  </tr>
 )
 
 const Statistics = ({ good, neutral, bad, total, average, percentage }) => {
@@ -20,14 +21,16 @@ const Statistics = ({ good, neutral, bad, total, average, percentage }) => {
   return (
     <>
       <h1>statistics</h1>
-      <ul>
-        <List title="good" value={good} />
-        <List title="neutral" value={neutral} />
-        <List title="bad" value={bad} />
-        <li>all {total}</li>
-        <li>average {average}</li>
-        <li>positive {percentage} %</li>
-      </ul>
+      <table>
+        <tbody>
+          <StatisticLine title="good" value={good} />
+          <StatisticLine title="neutral" value={neutral} />
+          <StatisticLine title="bad" value={bad} />
+          <StatisticLine title="all" value={total} />
+          <StatisticLine title="average" value={average} />
+          <StatisticLine title="positive" value={percentage} />
+        </tbody>
+      </table>
     </>
   )
 }
@@ -43,8 +46,8 @@ const App = () => {
   const handleGood = () => {
     const newGood = good + 1
     const newTotal = newGood + neutral + bad
-    const newAverage = (newGood - bad) / newTotal
-    const newPercentage = ((newGood / newTotal) * 100).toFixed(14)
+    const newAverage = ((newGood - bad) / newTotal).toFixed(1)
+    const newPercentage = ((newGood / newTotal) * 100).toFixed(1)
 
     setGood(newGood)
     setTotal(newTotal)
@@ -55,8 +58,8 @@ const App = () => {
   const handleNeutral = () => {
     const newNeutral = neutral + 1
     const newTotal = good + newNeutral + bad
-    const newAverage = (good - bad) / newTotal
-    const newPercentage = ((good / newTotal) * 100).toFixed(14)
+    const newAverage = ((good - bad) / newTotal).toFixed(1)
+    const newPercentage = ((good / newTotal) * 100).toFixed(1)
 
     setNeutral(newNeutral)
     setTotal(newTotal)
@@ -67,8 +70,8 @@ const App = () => {
   const handleBad = () => {
     const newBad = bad + 1
     const newTotal = good + neutral + newBad
-    const newAverage = (good - newBad) / newTotal
-    const newPercentage = ((good / newTotal) * 100).toFixed(14)
+    const newAverage = ((good - newBad) / newTotal).toFixed(1)
+    const newPercentage = ((good / newTotal) * 100).toFixed(1)
 
     setBad(newBad)
     setTotal(newTotal)
