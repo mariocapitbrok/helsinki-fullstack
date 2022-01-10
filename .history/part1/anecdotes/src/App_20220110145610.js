@@ -24,15 +24,15 @@ const App = () => {
 
   const [selected, setSelected] = useState(0)
   const [votes, setVotes] = useState([
-    { anecdoteId: 0, anecdoteVotes: 0 },
-    { anecdoteId: 1, anecdoteVotes: 0 },
-    { anecdoteId: 2, anecdoteVotes: 0 },
-    { anecdoteId: 3, anecdoteVotes: 0 },
-    { anecdoteId: 4, anecdoteVotes: 0 },
-    { anecdoteId: 5, anecdoteVotes: 0 },
-    { anecdoteId: 6, anecdoteVotes: 0 },
+    { anecdotePosition: 0, anecdoteVotes: 0 },
+    { anecdotePosition: 1, anecdoteVotes: 0 },
+    { anecdotePosition: 2, anecdoteVotes: 0 },
+    { anecdotePosition: 3, anecdoteVotes: 0 },
+    { anecdotePosition: 4, anecdoteVotes: 0 },
+    { anecdotePosition: 5, anecdoteVotes: 0 },
+    { anecdotePosition: 6, anecdoteVotes: 0 },
   ])
-  const [sortedVotes, setSortedVotes] = useState(votes)
+  const [sortedVotes, setSortedVotes] = useState([])
 
   const getRandomInt = (max, min) =>
     Math.floor(Math.random() * (max - min)) + min
@@ -52,6 +52,7 @@ const App = () => {
       (a, b) => b.anecdoteVotes - a.anecdoteVotes
     )
     setSortedVotes(newSortedVotes)
+    console.log(votes, sortedVotes)
   }
 
   return (
@@ -64,7 +65,7 @@ const App = () => {
       <Anecdote
         anecdotes={anecdotes}
         votes={votes}
-        selected={sortedVotes[0].anecdoteId}
+        selected={sortedVotes[0].anecdotePosition}
       />
     </div>
   )

@@ -52,6 +52,7 @@ const App = () => {
       (a, b) => b.anecdoteVotes - a.anecdoteVotes
     )
     setSortedVotes(newSortedVotes)
+    console.log(votes, sortedVotes)
   }
 
   return (

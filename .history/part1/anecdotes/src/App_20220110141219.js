@@ -32,7 +32,6 @@ const App = () => {
     { anecdoteId: 5, anecdoteVotes: 0 },
     { anecdoteId: 6, anecdoteVotes: 0 },
   ])
-  const [sortedVotes, setSortedVotes] = useState(votes)
 
   const getRandomInt = (max, min) =>
     Math.floor(Math.random() * (max - min)) + min
@@ -43,15 +42,11 @@ const App = () => {
   }
 
   const handleVote = () => {
-    const newVotes = [...votes]
+    let newVotes = [...votes]
     newVotes[selected].anecdoteVotes += 1
+    newVotes.sort((a, b) => b.anecdoteVotes - a.anecdoteVotes)
+    console.log(newVotes)
     setVotes(newVotes)
-
-    const unsortedVotes = [...votes]
-    const newSortedVotes = unsortedVotes.sort(
-      (a, b) => b.anecdoteVotes - a.anecdoteVotes
-    )
-    setSortedVotes(newSortedVotes)
   }
 
   return (
@@ -61,11 +56,7 @@ const App = () => {
       <button onClick={handleVote}>vote</button>
       <button onClick={handleSelect}>next anecdote</button>
       <h1>Anecdote with most votes</h1>
-      <Anecdote
-        anecdotes={anecdotes}
-        votes={votes}
-        selected={sortedVotes[0].anecdoteId}
-      />
+      <Anecdote anecdotes={anecdotes} votes={votes} selected={0} />
     </div>
   )
 }

@@ -32,7 +32,7 @@ const App = () => {
     { anecdoteId: 5, anecdoteVotes: 0 },
     { anecdoteId: 6, anecdoteVotes: 0 },
   ])
-  const [sortedVotes, setSortedVotes] = useState(votes)
+  const [sortedVotes, setSortedVotes] = useState([])
 
   const getRandomInt = (max, min) =>
     Math.floor(Math.random() * (max - min)) + min
@@ -52,6 +52,7 @@ const App = () => {
       (a, b) => b.anecdoteVotes - a.anecdoteVotes
     )
     setSortedVotes(newSortedVotes)
+    console.log(votes, sortedVotes)
   }
 
   return (
