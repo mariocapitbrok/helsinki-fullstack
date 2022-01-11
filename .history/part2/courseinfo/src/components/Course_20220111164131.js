@@ -1,4 +1,7 @@
 import React from 'react'
+import Header from './Header'
+import Content from './Content'
+import Total from './Total'
 
 const Header = ({ course }) => {
   return <h1>{course.name}</h1>
