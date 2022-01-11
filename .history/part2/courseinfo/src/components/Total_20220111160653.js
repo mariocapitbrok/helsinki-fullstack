@@ -9,7 +9,7 @@ const Total = ({ course }) => {
     return totalExercises
   }
 
-  return <h3>total of {sumPartsExercises(course.parts)} exercises</h3>
+  return <p>total of {sumPartsExercises(course.parts)} exercises</p>
 }
 
 export default Total
