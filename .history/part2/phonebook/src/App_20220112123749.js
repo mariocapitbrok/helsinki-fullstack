@@ -51,8 +51,9 @@ const App = () => {
   )
 
   // Filter alternative
-  const personsToShowB = persons.filter((person) =>
-    person.name.toLowerCase().startsWith(newFilter.toLowerCase())
+  const personsToShowB = persons.filter(
+    (person) =>
+      person.name.toLowerCase().startsWith(newFilter.toLowerCase()) === true
   )
 
   return (
@@ -75,7 +76,7 @@ const App = () => {
         </div>
       </form>
       <h2>Numbers</h2>
-      {personsToShowA.map((person) => (
+      {personsToShowB.map((person) => (
         <Person key={person.name} name={person.name} number={person.number} />
       ))}
     </div>

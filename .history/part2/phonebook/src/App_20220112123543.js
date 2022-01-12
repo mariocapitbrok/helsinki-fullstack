@@ -45,14 +45,13 @@ const App = () => {
     setNewNumber(e.target.value)
   }
 
-  // Filter required by the exercise
   const personsToShowA = persons.filter(
-    (person) => person.name.toLowerCase().indexOf(newFilter.toLowerCase()) > -1
+    (person) =>
+      person.name.toLowerCase().startsWith(newFilter.toLowerCase()) === true
   )
 
-  // Filter alternative
-  const personsToShowB = persons.filter((person) =>
-    person.name.toLowerCase().startsWith(newFilter.toLowerCase())
+  const personsToShowB = persons.filter(
+    (person) => person.name.toLowerCase().indexOf(newFilter.toLowerCase()) > -1
   )
 
   return (

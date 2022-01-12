@@ -45,14 +45,9 @@ const App = () => {
     setNewNumber(e.target.value)
   }
 
-  // Filter required by the exercise
-  const personsToShowA = persons.filter(
-    (person) => person.name.toLowerCase().indexOf(newFilter.toLowerCase()) > -1
-  )
-
-  // Filter alternative
-  const personsToShowB = persons.filter((person) =>
-    person.name.toLowerCase().startsWith(newFilter.toLowerCase())
+  const personsToShow = persons.filter(
+    (person) =>
+      person.name.toLowerCase().startsWith(newFilter.toLowerCase()) === true
   )
 
   return (
@@ -75,7 +70,7 @@ const App = () => {
         </div>
       </form>
       <h2>Numbers</h2>
-      {personsToShowA.map((person) => (
+      {personsToShow.map((person) => (
         <Person key={person.name} name={person.name} number={person.number} />
       ))}
     </div>

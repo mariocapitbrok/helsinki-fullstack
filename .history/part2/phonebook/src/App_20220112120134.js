@@ -33,49 +33,33 @@ const App = () => {
     setNewNumber('')
   }
 
-  const handleFilterChange = (e) => {
-    setNewFilter(e.target.value)
-  }
-
-  const handleNameChange = (e) => {
-    setNewName(e.target.value)
-  }
-
-  const handleNumberChange = (e) => {
-    setNewNumber(e.target.value)
-  }
-
-  // Filter required by the exercise
-  const personsToShowA = persons.filter(
-    (person) => person.name.toLowerCase().indexOf(newFilter.toLowerCase()) > -1
-  )
-
-  // Filter alternative
-  const personsToShowB = persons.filter((person) =>
-    person.name.toLowerCase().startsWith(newFilter.toLowerCase())
-  )
-
   return (
     <div>
       <h2>Phonebook</h2>
       <div>
         filter shown with
-        <input onChange={handleFilterChange} value={newFilter} />
+        <input onChange={(e) => setNewFilter(e.target.value)} />
+        {newFilter}
+        <br />
       </div>
-      <h2>add a new</h2>
       <form onSubmit={handleSubmit}>
         <div>
-          name: <input onChange={handleNameChange} value={newName} />
+          name:{' '}
+          <input onChange={(e) => setNewName(e.target.value)} value={newName} />
         </div>
         <div>
-          number: <input onChange={handleNumberChange} value={newNumber} />
+          number:{' '}
+          <input
+            onChange={(e) => setNewNumber(e.target.value)}
+            value={newNumber}
+          />
         </div>
         <div>
           <button type="submit">add</button>
         </div>
       </form>
       <h2>Numbers</h2>
-      {personsToShowA.map((person) => (
+      {persons.map((person) => (
         <Person key={person.name} name={person.name} number={person.number} />
       ))}
     </div>

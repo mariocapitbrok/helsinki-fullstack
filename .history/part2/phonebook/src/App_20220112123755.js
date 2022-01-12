@@ -51,8 +51,9 @@ const App = () => {
   )
 
   // Filter alternative
-  const personsToShowB = persons.filter((person) =>
-    person.name.toLowerCase().startsWith(newFilter.toLowerCase())
+  const personsToShowB = persons.filter(
+    (person) =>
+      person.name.toLowerCase().startsWith(newFilter.toLowerCase()) === true
   )
 
   return (
