@@ -1,7 +1,7 @@
 import React, { useState } from 'react'
 import Filter from './components/Filter'
 import PersonForm from './components/PersonForm'
-import Persons from './components/Persons'
+import Person from './componets/Person'
 
 const App = () => {
   const [newFilter, setNewFilter] = useState('')
@@ -42,6 +42,16 @@ const App = () => {
     setNewNumber(e.target.value)
   }
 
+  // Filter required by the exercise
+  const personsToShowA = persons.filter(
+    (person) => person.name.toLowerCase().indexOf(newFilter.toLowerCase()) > -1
+  )
+
+  // Filter alternative
+  const personsToShowB = persons.filter((person) =>
+    person.name.toLowerCase().startsWith(newFilter.toLowerCase())
+  )
+
   return (
     <div>
       <h2>Phonebook</h2>
@@ -55,7 +65,9 @@ const App = () => {
         newNumber={newNumber}
       />
       <h2>Numbers</h2>
-      <Persons persons={persons} newFilter={newFilter} />
+      {personsToShowA.map((person) => (
+        <Person key={person.name} name={person.name} number={person.number} />
+      ))}
     </div>
   )
 }

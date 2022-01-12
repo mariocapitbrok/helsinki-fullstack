@@ -1,7 +1,11 @@
 import React, { useState } from 'react'
 import Filter from './components/Filter'
-import PersonForm from './components/PersonForm'
-import Persons from './components/Persons'
+
+const Person = ({ name, number }) => (
+  <p>
+    {name} {number}
+  </p>
+)
 
 const App = () => {
   const [newFilter, setNewFilter] = useState('')
@@ -42,20 +46,33 @@ const App = () => {
     setNewNumber(e.target.value)
   }
 
+  // Filter required by the exercise
+  const personsToShowA = persons.filter(
+    (person) => person.name.toLowerCase().indexOf(newFilter.toLowerCase()) > -1
+  )
+
+  // Filter alternative
+  const personsToShowB = persons.filter((person) =>
+    person.name.toLowerCase().startsWith(newFilter.toLowerCase())
+  )
+
   return (
     <div>
       <h2>Phonebook</h2>
-      <Filter handleFilterChange={handleFilterChange} newFilter={newFilter} />
+      <Filter onChange={handleFilterChange} value={newFilter} />
       <h2>add a new</h2>
       <PersonForm
-        handleSubmit={handleSubmit}
-        handleNameChange={handleNameChange}
-        handleNumberChange={handleNumberChange}
-        newName={newName}
-        newNumber={newNumber}
+        onSubmit={handleSubmit}
+        onNameChange={handleNameChange}
+        onNumberChange={handleNumberChange}
+        nameValue={newName}
+        numberValue={newNumber}
       />
+
       <h2>Numbers</h2>
-      <Persons persons={persons} newFilter={newFilter} />
+      {personsToShowA.map((person) => (
+        <Person key={person.name} name={person.name} number={person.number} />
+      ))}
     </div>
   )
 }
