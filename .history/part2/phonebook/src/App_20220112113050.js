@@ -14,7 +14,7 @@ const App = () => {
 
     persons.findIndex((person) => person.name === newPerson.name) === -1
       ? setPersons([...persons, newPerson])
-      : alert(`${newPerson.name} is already added to phonebook`)
+      : console.log(`${newPerson.name} is already added to phonebook`)
   }
 
   const handleChange = (e) => {
