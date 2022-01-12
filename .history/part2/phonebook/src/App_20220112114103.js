@@ -1,8 +1,8 @@
 import React, { useState } from 'react'
 
-const Person = ({ name, number }) => (
+const Person = ({ name }) => (
   <p>
-    {name} {number}
+    `${name} ${number}`
   </p>
 )
 
@@ -26,9 +26,10 @@ const App = () => {
     persons.findIndex((person) => person.name === newPerson.name) === -1
       ? setPersons([...persons, newPerson])
       : alert(`${newPerson.name} is already added to phonebook`)
+  }
 
-    setNewName('')
-    setNewNumber('')
+  const handleChange = (e) => {
+    setNewName(e.target.value)
   }
 
   return (
@@ -36,15 +37,10 @@ const App = () => {
       <h2>Phonebook</h2>
       <form onSubmit={handleSubmit}>
         <div>
-          name:{' '}
-          <input onChange={(e) => setNewName(e.target.value)} value={newName} />
+          name: <input onChange={handleChange} value={newName} />
         </div>
         <div>
-          number:{' '}
-          <input
-            onChange={(e) => setNewNumber(e.target.value)}
-            value={newNumber}
-          />
+          number: <input onChange={handleChange} value={newNumber} />
         </div>
         <div>
           <button type="submit">add</button>

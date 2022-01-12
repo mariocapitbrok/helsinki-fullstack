@@ -1,10 +1,6 @@
 import React, { useState } from 'react'
 
-const Person = ({ name, number }) => (
-  <p>
-    {name} {number}
-  </p>
-)
+const Person = ({ name }) => <p>{name}</p>
 
 const App = () => {
   const [persons, setPersons] = useState([
@@ -14,21 +10,20 @@ const App = () => {
     },
   ])
   const [newName, setNewName] = useState('')
-  const [newNumber, setNewNumber] = useState('')
 
   const handleSubmit = (e) => {
     e.preventDefault()
     const newPerson = {
       name: newName,
-      number: newNumber,
     }
 
     persons.findIndex((person) => person.name === newPerson.name) === -1
       ? setPersons([...persons, newPerson])
       : alert(`${newPerson.name} is already added to phonebook`)
+  }
 
-    setNewName('')
-    setNewNumber('')
+  const handleChange = (e) => {
+    setNewName(e.target.value)
   }
 
   return (
@@ -36,15 +31,7 @@ const App = () => {
       <h2>Phonebook</h2>
       <form onSubmit={handleSubmit}>
         <div>
-          name:{' '}
-          <input onChange={(e) => setNewName(e.target.value)} value={newName} />
-        </div>
-        <div>
-          number:{' '}
-          <input
-            onChange={(e) => setNewNumber(e.target.value)}
-            value={newNumber}
-          />
+          name: <input onChange={handleChange} value={newName} />
         </div>
         <div>
           <button type="submit">add</button>
@@ -52,7 +39,7 @@ const App = () => {
       </form>
       <h2>Numbers</h2>
       {persons.map((person) => (
-        <Person key={person.name} name={person.name} number={person.number} />
+        <Person key={person.name} name={person.name} />
       ))}
     </div>
   )
