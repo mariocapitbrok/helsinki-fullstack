@@ -9,7 +9,7 @@ const App = () => {
 
   useEffect(() => {
     console.log('effect')
-    axios.get('http://localhost:3001/notes').then((response) => {
+    axios.get('http://localhost/notes').then((response) => {
       console.log('promise fulfilled')
       setNotes(response.data)
     })
@@ -18,7 +18,7 @@ const App = () => {
 
   return (
     <div>
-      <h1>Notes from localhost server</h1>
+      <h1>Notes</h1>
       <ul>
         {notes.map((note) => (
           <Note key={note.id} note={note} />

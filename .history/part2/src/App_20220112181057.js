@@ -7,18 +7,20 @@ const App = () => {
   const [newNote, setNewNote] = useState('')
   const [showAll, setShowAll] = useState(true)
 
-  useEffect(() => {
+  const hook = () => {
     console.log('effect')
     axios.get('http://localhost:3001/notes').then((response) => {
       console.log('promise fulfilled')
       setNotes(response.data)
     })
-  }, [])
+  }
+
+  useEffect(hook, [])
   console.log('render', notes.length, 'notes')
 
   return (
     <div>
-      <h1>Notes from localhost server</h1>
+      <h1>Notes</h1>
       <ul>
         {notes.map((note) => (
           <Note key={note.id} note={note} />

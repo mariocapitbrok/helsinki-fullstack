@@ -11,10 +11,13 @@ const App = () => {
   const [newNumber, setNewNumber] = useState('')
 
   useEffect(() => {
+    console.log('hook effect')
     axios.get('http://localhost:3001/persons').then((response) => {
+      console.log('promise fulfilled')
       setPersons(response.data)
     })
   }, [])
+  console.log('response:', persons.length, 'persons')
 
   const handleSubmit = (e) => {
     e.preventDefault()

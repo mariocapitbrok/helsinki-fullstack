@@ -14,11 +14,10 @@ const App = () => {
       setNotes(response.data)
     })
   }, [])
-  console.log('render', notes.length, 'notes')
 
   return (
     <div>
-      <h1>Notes from localhost server</h1>
+      <h1>Notes</h1>
       <ul>
         {notes.map((note) => (
           <Note key={note.id} note={note} />
