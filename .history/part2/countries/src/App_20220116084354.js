@@ -38,7 +38,7 @@ const CountryList = ({ countriesToShow, setNewFilter }) => {
         <>
           <div key={country.name.common}>
             {country.name.common}{' '}
-            <button onClick={() => handleClick(country)}>show</button>
+            <button onClick={handleClick(country)}>show</button>
           </div>
         </>
       ))}
@@ -143,7 +143,6 @@ const App = () => {
       <div>
         find countries:
         <input onChange={handleCountryChange} value={newFilter} />
-        <button onClick={() => setNewFilter('')}>reset</button>
         <Filter
           countries={countries}
           newFilter={newFilter}

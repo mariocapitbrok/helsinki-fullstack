@@ -27,8 +27,8 @@ const Languages = ({ languages }) => {
   return <></>
 }
 
-const CountryList = ({ countriesToShow, setNewFilter }) => {
-  const handleClick = (country) => {
+const CountryList = ({ countriesToShow }) => {
+  const handleClick = () => {
     setNewFilter(`[${country.name.common}]`)
   }
 
@@ -37,8 +37,7 @@ const CountryList = ({ countriesToShow, setNewFilter }) => {
       {countriesToShow.map((country) => (
         <>
           <div key={country.name.common}>
-            {country.name.common}{' '}
-            <button onClick={() => handleClick(country)}>show</button>
+            {country.name.common} <button onClick={handleClick}>show</button>
           </div>
         </>
       ))}
@@ -143,7 +142,6 @@ const App = () => {
       <div>
         find countries:
         <input onChange={handleCountryChange} value={newFilter} />
-        <button onClick={() => setNewFilter('')}>reset</button>
         <Filter
           countries={countries}
           newFilter={newFilter}

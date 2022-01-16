@@ -27,8 +27,8 @@ const Languages = ({ languages }) => {
   return <></>
 }
 
-const CountryList = ({ countriesToShow, setNewFilter }) => {
-  const handleClick = (country) => {
+const CountryList = ({ countriesToShow }) => {
+  const handleClick = () => {
     setNewFilter(`[${country.name.common}]`)
   }
 
@@ -37,8 +37,7 @@ const CountryList = ({ countriesToShow, setNewFilter }) => {
       {countriesToShow.map((country) => (
         <>
           <div key={country.name.common}>
-            {country.name.common}{' '}
-            <button onClick={() => handleClick(country)}>show</button>
+            {country.name.common} <button onClick={handleClick}>show</button>
           </div>
         </>
       ))}
@@ -57,7 +56,7 @@ const Country = ({ name, capitals, population, languages, flags }) => (
   </div>
 )
 
-const Filter = ({ countries, newFilter, setNewFilter }) => {
+const Filter = ({ countries, newFilter }) => {
   const exactSearch = () => {
     if (newFilter.startsWith('[') && newFilter.endsWith(']'))
       return newFilter.slice(1, newFilter.length - 1)
@@ -98,13 +97,7 @@ const Filter = ({ countries, newFilter, setNewFilter }) => {
     )
   }
 
-  if (length <= 10)
-    return (
-      <CountryList
-        countriesToShow={countriesToShow}
-        setNewFilter={setNewFilter}
-      />
-    )
+  if (length <= 10) return <CountryList countriesToShow={countriesToShow} />
 
   if (length > 10)
     return (
@@ -143,7 +136,6 @@ const App = () => {
       <div>
         find countries:
         <input onChange={handleCountryChange} value={newFilter} />
-        <button onClick={() => setNewFilter('')}>reset</button>
         <Filter
           countries={countries}
           newFilter={newFilter}

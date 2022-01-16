@@ -143,7 +143,6 @@ const App = () => {
       <div>
         find countries:
         <input onChange={handleCountryChange} value={newFilter} />
-        <button onClick={() => setNewFilter('')}>reset</button>
         <Filter
           countries={countries}
           newFilter={newFilter}
