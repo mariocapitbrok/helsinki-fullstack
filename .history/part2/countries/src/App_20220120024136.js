@@ -114,15 +114,12 @@ const Country = ({ name, capitals, population, languages, flags }) => {
   )
 }
 
-const Filter = ({ newFilter, setNewFilter }) => {
-  const [countries, setCountries] = useState([])
+const Filter = ({
+  countries,
+  newFilter,
 
-  useEffect(() => {
-    axios.get('https://restcountries.com/v3.1/all').then((response) => {
-      setCountries(response.data)
-    })
-  }, [])
-
+  setNewFilter,
+}) => {
   const exactSearch = () => {
     if (newFilter.startsWith('[') && newFilter.endsWith(']'))
       return newFilter.slice(1, newFilter.length - 1)
@@ -190,19 +187,32 @@ const Filter = ({ newFilter, setNewFilter }) => {
 }
 
 const App = () => {
+  const [countries, setCountries] = useState([])
   const [newFilter, setNewFilter] = useState('')
+
+  useEffect(() => {
+    axios.get('https://restcountries.com/v3.1/all').then((response) => {
+      setCountries(response.data)
+    })
+  }, [])
 
   const handleCountryChange = (e) => {
     setNewFilter(e.target.value)
   }
 
   return (
-    <div>
-      find countries:
-      <input onChange={handleCountryChange} value={newFilter} />
-      <button onClick={() => setNewFilter('')}>reset</button>
-      <Filter newFilter={newFilter} setNewFilter={setNewFilter} />
-    </div>
+    <>
+      <div>
+        find countries:
+        <input onChange={handleCountryChange} value={newFilter} />
+        <button onClick={() => setNewFilter('')}>reset</button>
+        <Filter
+          countries={countries}
+          newFilter={newFilter}
+          setNewFilter={setNewFilter}
+        />
+      </div>
+    </>
   )
 }
 
