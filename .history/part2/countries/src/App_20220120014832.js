@@ -27,8 +27,8 @@ const Languages = ({ languages }) => {
   return <></>
 }
 
-const Weather = ({ countryName }) => {
-  const [weather, setWeather] = useState({})
+const Weather = ({ countryName, weather, setWeather }) => {
+  const [weather2, setWeather2] = useState({})
 
   useEffect(() => {
     const api_key = process.env.REACT_APP_API_KEY
@@ -40,27 +40,9 @@ const Weather = ({ countryName }) => {
   }, [])
   console.log(weather)
 
-  let { main, wind, weather: weatherData } = weather
+  const { main, wind, weather: weatherData } = weather
 
   if (Object.keys(weather).length > 0) {
-    let windDirection = ''
-    if (wind.deg > 0 && wind.deg < 45) windDirection = 'ENE'
-    if (wind.deg === 45) windDirection = 'NE'
-    if (wind.deg > 45 && wind.deg < 90) windDirection = 'NNE'
-    if (wind.deg === 90) windDirection = 'N'
-    if (wind.deg > 90 && wind.deg < 135) windDirection = 'NNW'
-    if (wind.deg === 135) windDirection = 'NW'
-    if (wind.deg > 135 && wind.deg < 180) windDirection = 'WNW'
-    if (wind.deg === 180) windDirection = 'W'
-    if (wind.deg > 180 && wind.deg < 225) windDirection = 'WSW'
-    if (wind.deg === 225) windDirection = 'SW'
-    if (wind.deg > 225 && wind.deg < 270) windDirection = 'SSW'
-    if (wind.deg === 270) windDirection = 'S'
-    if (wind.deg > 270 && wind.deg < 315) windDirection = 'SSE'
-    if (wind.deg === 315) windDirection = 'SE'
-    if (wind.deg > 315 && wind.deg < 360) windDirection = 'ESE'
-    if (wind.deg === 360 || wind.deg === 0) windDirection = 'E'
-
     return (
       <div>
         <h2>Weather in {countryName}</h2>
@@ -74,8 +56,8 @@ const Weather = ({ countryName }) => {
           />
         </div>
         <div>
-          <b>wind: </b>
-          {wind.speed} mph direction {windDirection}
+          <b>wind:</b>
+          {wind.speed} mph direction {wind.deg}
         </div>
       </div>
     )
@@ -101,7 +83,15 @@ const CountryList = ({ countriesToShow, setNewFilter }) => {
   )
 }
 
-const Country = ({ name, capitals, population, languages, flags }) => {
+const Country = ({
+  name,
+  capitals,
+  population,
+  languages,
+  flags,
+  weather,
+  setWeather,
+}) => {
   return (
     <div>
       <h1>{name}</h1>
@@ -110,7 +100,7 @@ const Country = ({ name, capitals, population, languages, flags }) => {
       <h2>Spoken languages</h2>
       <Languages languages={languages} />
       <img src={flags.svg} alt="flag" width={150} />
-      <Weather countryName={name} />
+      <Weather countryName={name} weather={weather} setWeather={setWeather} />
     </div>
   )
 }
@@ -118,8 +108,10 @@ const Country = ({ name, capitals, population, languages, flags }) => {
 const Filter = ({
   countries,
   newFilter,
-
+  weather,
   setNewFilter,
+  setCountryName,
+  setWeather,
 }) => {
   const exactSearch = () => {
     if (newFilter.startsWith('[') && newFilter.endsWith(']'))
@@ -157,6 +149,8 @@ const Filter = ({
         population={population}
         languages={languages}
         flags={flags}
+        weather={weather}
+        setWeather={setWeather}
       />
     )
   }
@@ -189,6 +183,8 @@ const Filter = ({
 
 const App = () => {
   const [countries, setCountries] = useState([])
+  const [countryName, setCountryName] = useState('')
+  const [weather, setWeather] = useState({})
   const [newFilter, setNewFilter] = useState('')
 
   useEffect(() => {
@@ -210,7 +206,10 @@ const App = () => {
         <Filter
           countries={countries}
           newFilter={newFilter}
+          weather={weather}
           setNewFilter={setNewFilter}
+          setCountryName={setCountryName}
+          setWeather={setWeather}
         />
       </div>
     </>

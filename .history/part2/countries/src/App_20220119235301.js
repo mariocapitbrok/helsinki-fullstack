@@ -27,61 +27,23 @@ const Languages = ({ languages }) => {
   return <></>
 }
 
-const Weather = ({ countryName }) => {
-  const [weather, setWeather] = useState({})
-
-  useEffect(() => {
-    const api_key = process.env.REACT_APP_API_KEY
-    axios
-      .get(
-        `https://api.openweathermap.org/data/2.5/weather?q=${countryName}&appid=${api_key}`
-      )
-      .then((response) => setWeather(response.data))
-  }, [])
-  console.log(weather)
-
-  let { main, wind, weather: weatherData } = weather
-
-  if (Object.keys(weather).length > 0) {
-    let windDirection = ''
-    if (wind.deg > 0 && wind.deg < 45) windDirection = 'ENE'
-    if (wind.deg === 45) windDirection = 'NE'
-    if (wind.deg > 45 && wind.deg < 90) windDirection = 'NNE'
-    if (wind.deg === 90) windDirection = 'N'
-    if (wind.deg > 90 && wind.deg < 135) windDirection = 'NNW'
-    if (wind.deg === 135) windDirection = 'NW'
-    if (wind.deg > 135 && wind.deg < 180) windDirection = 'WNW'
-    if (wind.deg === 180) windDirection = 'W'
-    if (wind.deg > 180 && wind.deg < 225) windDirection = 'WSW'
-    if (wind.deg === 225) windDirection = 'SW'
-    if (wind.deg > 225 && wind.deg < 270) windDirection = 'SSW'
-    if (wind.deg === 270) windDirection = 'S'
-    if (wind.deg > 270 && wind.deg < 315) windDirection = 'SSE'
-    if (wind.deg === 315) windDirection = 'SE'
-    if (wind.deg > 315 && wind.deg < 360) windDirection = 'ESE'
-    if (wind.deg === 360 || wind.deg === 0) windDirection = 'E'
-
-    return (
+const Weather = ({ countryName, weather }) => {
+  return (
+    <div>
+      <h2>Weather in {countryName}</h2>
       <div>
-        <h2>Weather in {countryName}</h2>
-        <div>
-          <b>temperature: </b>
-          {main.temp} Celcius
-        </div>
-        <div>
-          <img
-            src={`http://openweathermap.org/img/wn/${weatherData[0].icon}@2x.png`}
-          />
-        </div>
-        <div>
-          <b>wind: </b>
-          {wind.speed} mph direction {windDirection}
-        </div>
+        <b>temperature: </b>
+        {weather.main.temp} Celcius
       </div>
-    )
-  }
-
-  return <></>
+      <div>
+        <img src="http://openweathermap.org/img/wn/04n@2x.png" />
+      </div>
+      <div>
+        <b>wind:</b>
+        {} mph direction {}
+      </div>
+    </div>
+  )
 }
 
 const CountryList = ({ countriesToShow, setNewFilter }) => {
@@ -101,7 +63,7 @@ const CountryList = ({ countriesToShow, setNewFilter }) => {
   )
 }
 
-const Country = ({ name, capitals, population, languages, flags }) => {
+const Country = ({ name, weather, capitals, population, languages, flags }) => {
   return (
     <div>
       <h1>{name}</h1>
@@ -110,17 +72,12 @@ const Country = ({ name, capitals, population, languages, flags }) => {
       <h2>Spoken languages</h2>
       <Languages languages={languages} />
       <img src={flags.svg} alt="flag" width={150} />
-      <Weather countryName={name} />
+      <Weather countryName={name} weather={weather} />
     </div>
   )
 }
 
-const Filter = ({
-  countries,
-  newFilter,
-
-  setNewFilter,
-}) => {
+const Filter = ({ countries, weather, newFilter, setNewFilter }) => {
   const exactSearch = () => {
     if (newFilter.startsWith('[') && newFilter.endsWith(']'))
       return newFilter.slice(1, newFilter.length - 1)
@@ -153,6 +110,7 @@ const Filter = ({
     return (
       <Country
         name={name}
+        weather={weather}
         capitals={capitals}
         population={population}
         languages={languages}
@@ -189,13 +147,21 @@ const Filter = ({
 
 const App = () => {
   const [countries, setCountries] = useState([])
+  const [weather, setWeather] = useState([])
   const [newFilter, setNewFilter] = useState('')
 
   useEffect(() => {
     axios.get('https://restcountries.com/v3.1/all').then((response) => {
       setCountries(response.data)
     })
+
+    axios
+      .get(
+        'https://api.openweathermap.org/data/2.5/weather?q=mexico&appid=703c58344e949447afd8cba9d95889bf'
+      )
+      .then((response) => setWeather([...weather, response.data]))
   }, [])
+  console.log(weather.length === 1 ? 'yes' : 'no', weather, weather.length)
 
   const handleCountryChange = (e) => {
     setNewFilter(e.target.value)
@@ -209,6 +175,7 @@ const App = () => {
         <button onClick={() => setNewFilter('')}>reset</button>
         <Filter
           countries={countries}
+          weather={weather}
           newFilter={newFilter}
           setNewFilter={setNewFilter}
         />

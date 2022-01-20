@@ -74,7 +74,7 @@ const Weather = ({ countryName }) => {
           />
         </div>
         <div>
-          <b>wind: </b>
+          <b>wind:</b>
           {wind.speed} mph direction {windDirection}
         </div>
       </div>

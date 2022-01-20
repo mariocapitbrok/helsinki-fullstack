@@ -28,60 +28,33 @@ const Languages = ({ languages }) => {
 }
 
 const Weather = ({ countryName }) => {
-  const [weather, setWeather] = useState({})
+  const [weather, setWeather] = useState([])
 
   useEffect(() => {
-    const api_key = process.env.REACT_APP_API_KEY
     axios
       .get(
-        `https://api.openweathermap.org/data/2.5/weather?q=${countryName}&appid=${api_key}`
+        'https://api.openweathermap.org/data/2.5/weather?q=mexico&appid=703c58344e949447afd8cba9d95889bf'
       )
-      .then((response) => setWeather(response.data))
+      .then((response) => setWeather([...weather, response.data]))
   }, [])
-  console.log(weather)
 
-  let { main, wind, weather: weatherData } = weather
-
-  if (Object.keys(weather).length > 0) {
-    let windDirection = ''
-    if (wind.deg > 0 && wind.deg < 45) windDirection = 'ENE'
-    if (wind.deg === 45) windDirection = 'NE'
-    if (wind.deg > 45 && wind.deg < 90) windDirection = 'NNE'
-    if (wind.deg === 90) windDirection = 'N'
-    if (wind.deg > 90 && wind.deg < 135) windDirection = 'NNW'
-    if (wind.deg === 135) windDirection = 'NW'
-    if (wind.deg > 135 && wind.deg < 180) windDirection = 'WNW'
-    if (wind.deg === 180) windDirection = 'W'
-    if (wind.deg > 180 && wind.deg < 225) windDirection = 'WSW'
-    if (wind.deg === 225) windDirection = 'SW'
-    if (wind.deg > 225 && wind.deg < 270) windDirection = 'SSW'
-    if (wind.deg === 270) windDirection = 'S'
-    if (wind.deg > 270 && wind.deg < 315) windDirection = 'SSE'
-    if (wind.deg === 315) windDirection = 'SE'
-    if (wind.deg > 315 && wind.deg < 360) windDirection = 'ESE'
-    if (wind.deg === 360 || wind.deg === 0) windDirection = 'E'
-
-    return (
+  console.log(weather[0].main.temp)
+  return (
+    <div>
+      <h2>Weather in {countryName}</h2>
       <div>
-        <h2>Weather in {countryName}</h2>
-        <div>
-          <b>temperature: </b>
-          {main.temp} Celcius
-        </div>
-        <div>
-          <img
-            src={`http://openweathermap.org/img/wn/${weatherData[0].icon}@2x.png`}
-          />
-        </div>
-        <div>
-          <b>wind: </b>
-          {wind.speed} mph direction {windDirection}
-        </div>
+        <b>temperature: </b>
+        {} Celcius
       </div>
-    )
-  }
-
-  return <></>
+      <div>
+        <img src="http://openweathermap.org/img/wn/04n@2x.png" />
+      </div>
+      <div>
+        <b>wind:</b>
+        {} mph direction {}
+      </div>
+    </div>
+  )
 }
 
 const CountryList = ({ countriesToShow, setNewFilter }) => {
@@ -115,12 +88,7 @@ const Country = ({ name, capitals, population, languages, flags }) => {
   )
 }
 
-const Filter = ({
-  countries,
-  newFilter,
-
-  setNewFilter,
-}) => {
+const Filter = ({ countries, newFilter, setNewFilter }) => {
   const exactSearch = () => {
     if (newFilter.startsWith('[') && newFilter.endsWith(']'))
       return newFilter.slice(1, newFilter.length - 1)

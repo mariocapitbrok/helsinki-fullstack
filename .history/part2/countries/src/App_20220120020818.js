@@ -43,23 +43,16 @@ const Weather = ({ countryName }) => {
   let { main, wind, weather: weatherData } = weather
 
   if (Object.keys(weather).length > 0) {
-    let windDirection = ''
-    if (wind.deg > 0 && wind.deg < 45) windDirection = 'ENE'
-    if (wind.deg === 45) windDirection = 'NE'
-    if (wind.deg > 45 && wind.deg < 90) windDirection = 'NNE'
-    if (wind.deg === 90) windDirection = 'N'
-    if (wind.deg > 90 && wind.deg < 135) windDirection = 'NNW'
-    if (wind.deg === 135) windDirection = 'NW'
-    if (wind.deg > 135 && wind.deg < 180) windDirection = 'WNW'
-    if (wind.deg === 180) windDirection = 'W'
-    if (wind.deg > 180 && wind.deg < 225) windDirection = 'WSW'
-    if (wind.deg === 225) windDirection = 'SW'
-    if (wind.deg > 225 && wind.deg < 270) windDirection = 'SSW'
-    if (wind.deg === 270) windDirection = 'S'
-    if (wind.deg > 270 && wind.deg < 315) windDirection = 'SSE'
-    if (wind.deg === 315) windDirection = 'SE'
-    if (wind.deg > 315 && wind.deg < 360) windDirection = 'ESE'
-    if (wind.deg === 360 || wind.deg === 0) windDirection = 'E'
+    console.log(wind.deg, typeof wind.deg, wind.deg > 0 && wind.deg < 90)
+    const windDirection = ''
+    if (wind.deg === 0 || wind.deg === 360) windDirection = 'E'
+    // if (wind.deg > 0 && wind.deg < 90) windDirection = 'NE'
+    // if (wind.deg === 90) windDirection = 'N'
+    // if (wind.deg > 90 && wind.deg < 180) windDirection = 'NW'
+    // if (wind.deg === 180) windDirection = 'W'
+    // if (wind.deg > 180 && wind.deg < 270) windDirection = 'SW'
+    // if (wind.deg === 270) windDirection = 'S'
+    // if (wind.deg > 270 && wind.deg < 360) windDirection = 'SE'
 
     return (
       <div>
@@ -74,7 +67,7 @@ const Weather = ({ countryName }) => {
           />
         </div>
         <div>
-          <b>wind: </b>
+          <b>wind:</b>
           {wind.speed} mph direction {windDirection}
         </div>
       </div>
