@@ -17,15 +17,9 @@ const App = () => {
     const note = notes.find((note) => note.id === id)
     const changedNote = { ...note, important: !note.important }
 
-    noteService
-      .update(id, changedNote)
-      .then((returnedNote) => {
-        setNotes(notes.map((note) => (note.id !== id ? note : returnedNote)))
-      })
-      .catch((error) => {
-        alert(`the note '${note.content}' was already deleted from server`)
-        setNotes(notes.filter((n) => n.id !== id))
-      })
+    noteService.update(id, changedNote).then((returnedNote) => {
+      setNotes(notes.map((note) => (note.id !== id ? note : returnedNote)))
+    })
   }
 
   const addNote = (event) => {
@@ -43,7 +37,7 @@ const App = () => {
   }
 
   const handleNoteChange = (event) => {
-    //console.log(event.target.value)
+    console.log(event.target.value)
     setNewNote(event.target.value)
   }
 
