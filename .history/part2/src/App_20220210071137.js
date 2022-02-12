@@ -51,17 +51,7 @@ const App = () => {
 
   return (
     <div>
-      <h1>Notes 2</h1>
-      <ul>
-        <li>
-          Extract the code that handles the communication with the backend into
-          its own module.
-        </li>
-        <li>
-          Catch error for a note that was already deleted and for the same
-          reason not saved to server
-        </li>
-      </ul>
+      <h1>Notes 2: Note not saved to server</h1>
       <div>
         <button onClick={() => setShowAll(!showAll)}>
           show {showAll ? 'important' : 'all'}

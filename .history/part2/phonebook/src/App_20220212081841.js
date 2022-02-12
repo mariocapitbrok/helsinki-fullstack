@@ -12,8 +12,8 @@ const App = () => {
   const [newNumber, setNewNumber] = useState('')
 
   useEffect(() => {
-    personService.getAll().then((allPersons) => {
-      setPersons(allPersons)
+    personService.getAll().then((response) => {
+      setPersons(response.data)
     })
   }, [])
 
@@ -26,9 +26,11 @@ const App = () => {
     }
 
     persons.findIndex((person) => person.name === newPerson.name) === -1
-      ? personService.create(newPerson).then((person) => {
-          setPersons([...persons, person])
-        })
+      ? axios
+          .post('http://localhost:3001/persons', newPerson)
+          .then((response) => {
+            setPersons([...persons, newPerson])
+          })
       : alert(`${newPerson.name} is already added to phonebook`)
 
     setNewName('')
