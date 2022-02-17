@@ -4,7 +4,7 @@ const Person = ({ id, name, number, handleDelete }) => (
   <>
     <div>
       {name} {number} {` `}
-      <button onClick={() => handleDelete(id, name)}>delete</button>
+      <button onClick={() => handleDelete(id)}>delete</button>
     </div>
   </>
 )

@@ -20,7 +20,7 @@ const remove = (id) => {
   // You can't use the name delete for a variable because
   // it's a reserved word in JavaScript.
   const request = axios.delete(`${baseURL}/${id}`)
-  return request.then((response) => response.data)
+  return request.then((response) => console.log(response.data))
 }
 
 export default { getAll, create, update, remove }

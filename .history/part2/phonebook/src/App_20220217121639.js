@@ -47,12 +47,10 @@ const App = () => {
     setNewNumber(e.target.value)
   }
 
-  const handleDelete = (id, name) => {
-    if (window.confirm(`Delete ${name} ?`)) {
-      personService.remove(id).then((returnedPerson) => {
-        setPersons(persons.filter((person) => person.id !== id))
-      })
-    }
+  const handleDelete = () => {
+    personService.remove().then((person) => {
+      window.confirm(`Delete ${person} ?`)
+    })
   }
 
   return (

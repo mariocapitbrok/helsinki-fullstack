@@ -15,13 +15,7 @@ const Persons = ({ persons, newFilter, handleDelete }) => {
   return (
     <>
       {personsToShowA.map((person) => (
-        <Person
-          key={person.id}
-          id={person.id}
-          name={person.name}
-          number={person.number}
-          handleDelete={handleDelete}
-        />
+        <Person key={person.id} name={person.name} number={person.number} />
       ))}
     </>
   )
