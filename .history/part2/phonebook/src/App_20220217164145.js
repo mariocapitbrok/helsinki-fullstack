@@ -32,7 +32,6 @@ const App = () => {
     } else {
       const person = persons.find((person) => person.name === newPerson.name)
       const changedPerson = { ...person, number: newNumber }
-      const id = person.id
 
       if (
         window.confirm(
@@ -40,21 +39,10 @@ const App = () => {
             `replace the old number with a new one?`
         )
       )
-        personService
-          .update(id, changedPerson)
-          .then((returnedPerson) => {
-            setPersons(
-              persons.map((person) =>
-                person.id !== id ? person : returnedPerson
-              )
-            )
-          })
-          .catch((error) => {
-            alert(
-              `The ${changedPerson.name}'s number was already deleted from server`
-            )
-            setPersons(persons.filter((person) => person.id !== id))
-          })
+        // personService.update(changedPerson.id, changedPerson).then(returnedPerson => setPersons(
+        //   persons.map(person => person.id !== changedPerson.id ? person : )
+        // ))
+        console.log('change number')
     }
 
     setNewName('')
