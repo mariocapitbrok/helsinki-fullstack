@@ -1,26 +1,46 @@
 import React, { useState, useEffect } from 'react'
 import Note from './components/Note'
 import noteService from './services/notes'
+import './index.css'
+
+const Notification = ({ message }) => {
+  if (message === null) {
+    return null
+  }
+
+  return <div className="error">{message}</div>
+}
 
 const App = () => {
   const [notes, setNotes] = useState([])
   const [newNote, setNewNote] = useState('')
   const [showAll, setShowAll] = useState(false)
+  const [errorMessage, setErrorMessage] = useState('some error happened...')
 
   useEffect(() => {
-    noteService.getAll().then((response) => {
-      setNotes(response.data)
+    noteService.getAll().then((initialNotes) => {
+      setNotes(initialNotes)
     })
   }, [])
 
   const toggleImportanceOf = (id) => {
     const note = notes.find((note) => note.id === id)
-    const url = `http://localhost:3001/notes/${id}`
     const changedNote = { ...note, important: !note.important }
 
-    noteService.update(id, changedNote).then((response) => {
-      setNotes(notes.map((note) => (note.id !== id ? note : response.data)))
-    })
+    noteService
+      .update(id, changedNote)
+      .then((returnedNote) => {
+        setNotes(notes.map((note) => (note.id !== id ? note : returnedNote)))
+      })
+      .catch((error) => {
+        setErrorMessage(
+          `Note '${note.content}' was already removed from server`
+        )
+        setTimeout(() => {
+          setErrorMessage(null)
+        }, 5000)
+        setNotes(notes.filter((n) => n.id !== id))
+      })
   }
 
   const addNote = (event) => {
@@ -31,14 +51,14 @@ const App = () => {
       important: Math.random() > 0.5,
     }
 
-    noteService.create(noteObject).then((response) => {
-      setNotes([...notes, response.data])
+    noteService.create(noteObject).then((returnedNote) => {
+      setNotes([...notes, returnedNote])
       setNewNote('')
     })
   }
 
   const handleNoteChange = (event) => {
-    console.log(event.target.value)
+    //console.log(event.target.value)
     setNewNote(event.target.value)
   }
 
@@ -46,7 +66,9 @@ const App = () => {
 
   return (
     <div>
-      <h1>Notes</h1>
+      <h1>Notes 3</h1>
+      <p>Custom error message</p>
+      <Notification message={errorMessage} />
       <div>
         <button onClick={() => setShowAll(!showAll)}>
           show {showAll ? 'important' : 'all'}

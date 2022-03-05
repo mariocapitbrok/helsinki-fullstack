@@ -1,17 +1,42 @@
 import React, { useState, useEffect } from 'react'
 import Note from './components/Note'
-import axios from 'axios'
+import noteService from './services/notes'
+import './index.css'
+
+const Notification = ({ message }) => {
+  if (message === null) {
+    return null
+  }
+
+  return <div className="error">{message}</div>
+}
 
 const App = () => {
   const [notes, setNotes] = useState([])
   const [newNote, setNewNote] = useState('')
   const [showAll, setShowAll] = useState(false)
+  const [errorMessage, setErrorMessage] = useState('some error happened...')
 
   useEffect(() => {
-    axios.get('http://localhost:3001/notes').then((response) => {
-      setNotes(response.data)
+    noteService.getAll().then((initialNotes) => {
+      setNotes(initialNotes)
     })
   }, [])
+
+  const toggleImportanceOf = (id) => {
+    const note = notes.find((note) => note.id === id)
+    const changedNote = { ...note, important: !note.important }
+
+    noteService
+      .update(id, changedNote)
+      .then((returnedNote) => {
+        setNotes(notes.map((note) => (note.id !== id ? note : returnedNote)))
+      })
+      .catch((error) => {
+        alert(`the note '${note.content}' was already deleted from server`)
+        setNotes(notes.filter((n) => n.id !== id))
+      })
+  }
 
   const addNote = (event) => {
     event.preventDefault()
@@ -21,26 +46,24 @@ const App = () => {
       important: Math.random() > 0.5,
     }
 
-    axios.post('http://localhost:3001/notes', noteObject).then((response) => {
-      setNotes([...notes, response.data])
+    noteService.create(noteObject).then((returnedNote) => {
+      setNotes([...notes, returnedNote])
       setNewNote('')
     })
   }
 
   const handleNoteChange = (event) => {
-    console.log(event.target.value)
+    //console.log(event.target.value)
     setNewNote(event.target.value)
-  }
-
-  const toggleImportanceOf = (id) => {
-    console.log(`importance of ${id} needs to be toggled`)
   }
 
   const notesToShow = showAll ? notes : notes.filter((note) => note.important)
 
   return (
     <div>
-      <h1>Notes</h1>
+      <h1>Notes 3</h1>
+      <p>Custom error message</p>
+      <Notification message={errorMessage} />
       <div>
         <button onClick={() => setShowAll(!showAll)}>
           show {showAll ? 'important' : 'all'}
