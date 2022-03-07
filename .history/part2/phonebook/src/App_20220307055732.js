@@ -4,12 +4,11 @@ import Filter from './components/Filter'
 import PersonForm from './components/PersonForm'
 import Persons from './components/Persons'
 import personService from './services/persons'
-import './index.css'
 
 const Notification = ({ message }) => {
   if (message === null) return null
 
-  return <div className="notification">{message}</div>
+  return <div className="notificationñ ">{message}</div>
 }
 
 const App = () => {
@@ -17,7 +16,7 @@ const App = () => {
   const [persons, setPersons] = useState([])
   const [newName, setNewName] = useState('')
   const [newNumber, setNewNumber] = useState('')
-  const [message, setMessage] = useState(null)
+  const [message, setMessage] = useState('A notification message...')
 
   useEffect(() => {
     personService.getAll().then((allPersons) => {
@@ -36,10 +35,10 @@ const App = () => {
     if (persons.findIndex((person) => person.name === newPerson.name) === -1) {
       personService.create(newPerson).then((person) => {
         setPersons([...persons, person])
-        setMessage(`Added ${person.name}`)
+        setMessage(`Added ${person}`)
         setTimeout(() => {
           setMessage(null)
-        }, 3000)
+        }, 5000)
       })
     } else {
       const person = persons.find((person) => person.name === newPerson.name)
@@ -60,10 +59,7 @@ const App = () => {
                 person.id !== id ? person : returnedPerson
               )
             )
-            setMessage(`Changed ${returnedPerson.name}`)
-            setTimeout(() => {
-              setMessage(null)
-            }, 3000)
+            setMessage(`Changed ${returnedPerson}`)
           })
           .catch((error) => {
             alert(

@@ -17,7 +17,7 @@ const App = () => {
   const [persons, setPersons] = useState([])
   const [newName, setNewName] = useState('')
   const [newNumber, setNewNumber] = useState('')
-  const [message, setMessage] = useState(null)
+  const [message, setMessage] = useState('A notification message...')
 
   useEffect(() => {
     personService.getAll().then((allPersons) => {
@@ -39,7 +39,7 @@ const App = () => {
         setMessage(`Added ${person.name}`)
         setTimeout(() => {
           setMessage(null)
-        }, 3000)
+        }, 5000)
       })
     } else {
       const person = persons.find((person) => person.name === newPerson.name)
@@ -63,7 +63,7 @@ const App = () => {
             setMessage(`Changed ${returnedPerson.name}`)
             setTimeout(() => {
               setMessage(null)
-            }, 3000)
+            }, 5000)
           })
           .catch((error) => {
             alert(
