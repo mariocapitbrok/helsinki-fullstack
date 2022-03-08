@@ -37,7 +37,6 @@ const App = () => {
     if (persons.findIndex((person) => person.name === newPerson.name) === -1) {
       personService.create(newPerson).then((person) => {
         setPersons([...persons, person])
-        setClassName('success')
         setMessage(`Added ${person.name}`)
         setTimeout(() => {
           setMessage(null)
@@ -62,20 +61,15 @@ const App = () => {
                 person.id !== id ? person : returnedPerson
               )
             )
-            setClassName('success')
             setMessage(`Changed ${returnedPerson.name}`)
             setTimeout(() => {
               setMessage(null)
             }, 3000)
           })
           .catch((error) => {
-            setClassName('error')
-            setMessage(
-              `Information of ${changedPerson.name} has already been removed from server`
+            alert(
+              `The ${changedPerson.name}'s number was already deleted from server`
             )
-            setTimeout(() => {
-              setMessage(null)
-            }, 3000)
             setPersons(persons.filter((person) => person.id !== id))
           })
     }
@@ -101,15 +95,6 @@ const App = () => {
       personService
         .remove(id)
         .then(setPersons(persons.filter((person) => person.id !== id)))
-        .catch((error) => {
-          setClassName('error')
-          setMessage(
-            `Information of ${name} has already been removed from server`
-          )
-          setTimeout(() => {
-            setMessage(null)
-          }, 3000)
-        })
     }
   }
 

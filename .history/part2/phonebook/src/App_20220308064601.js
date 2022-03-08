@@ -69,13 +69,9 @@ const App = () => {
             }, 3000)
           })
           .catch((error) => {
-            setClassName('error')
-            setMessage(
-              `Information of ${changedPerson.name} has already been removed from server`
+            alert(
+              `The ${changedPerson.name}'s number was already deleted from server`
             )
-            setTimeout(() => {
-              setMessage(null)
-            }, 3000)
             setPersons(persons.filter((person) => person.id !== id))
           })
     }
@@ -103,9 +99,7 @@ const App = () => {
         .then(setPersons(persons.filter((person) => person.id !== id)))
         .catch((error) => {
           setClassName('error')
-          setMessage(
-            `Information of ${name} has already been removed from server`
-          )
+          setMessage(`The ${name}'s number was already deleted from server`)
           setTimeout(() => {
             setMessage(null)
           }, 3000)

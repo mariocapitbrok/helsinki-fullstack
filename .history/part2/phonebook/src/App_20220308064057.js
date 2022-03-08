@@ -71,7 +71,7 @@ const App = () => {
           .catch((error) => {
             setClassName('error')
             setMessage(
-              `Information of ${changedPerson.name} has already been removed from server`
+              `The ${changedPerson.name}'s number was already deleted from server`
             )
             setTimeout(() => {
               setMessage(null)
@@ -101,15 +101,6 @@ const App = () => {
       personService
         .remove(id)
         .then(setPersons(persons.filter((person) => person.id !== id)))
-        .catch((error) => {
-          setClassName('error')
-          setMessage(
-            `Information of ${name} has already been removed from server`
-          )
-          setTimeout(() => {
-            setMessage(null)
-          }, 3000)
-        })
     }
   }
 
